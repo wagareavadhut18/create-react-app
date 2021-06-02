@@ -9,7 +9,6 @@ function Cake(props){
                     </div>
                 </div>
             )
-  
     }
     else{
       return null
