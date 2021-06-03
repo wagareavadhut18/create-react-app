@@ -1,18 +1,22 @@
 import Navbar from "./components/Navbar";
-import Carousel from "./components/Carousel";
-import Login from "./components/Login";
 import Signup from "./components/Signup";
-import Cakelist from "./components/Cakelist";
+import Login from "./components/Login";
+import Home from "./Home";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 function App() {
   return (
-    <div>
-        <Navbar></Navbar>
-        {/* <Signup></Signup> */}
-        <Carousel></Carousel>
-        <Cakelist></Cakelist>
-        {/* <Login></Login> */}
-    </div>
+    <Router>
+            <Navbar></Navbar>
+            <Route exact path="/"> <Home/></Route>
+            <Route exact path="/register"> <Signup/></Route>
+            <Route exact path="/login"> <Login/></Route>
+
+            {/* <Signup></Signup> */}
+
+            {/* <Login></Login> */}
+    </Router>
+   
   );
 }
 
