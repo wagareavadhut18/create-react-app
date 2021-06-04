@@ -1,6 +1,25 @@
-import { Link } from 'react-router-dom';
+import { Router, Route,Link, withRouter } from 'react-router-dom';
 
-function Navbar(){
+function Navbar(props){
+    let searchString = ""
+    let search = (event)=>{
+        event.preventDefault()
+      //   searchString = "searhc kar liya "
+      // console.log("we have to earch for " , searchString)
+      if(searchString){
+        // console.log("??????",searchString)
+        var url = "/search?q="+searchString
+        // console.warn('url....',url)
+         props.history.push(url)
+        
+      }
+    }
+
+    let getSearchText = function(event){
+        searchString = event.target.value
+    //    console.log("event value" , event.target.value)
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link to="/" className="navbar-brand"><img src="/images/ideaa.png" height="35"/>&nbsp;Ideaa</Link>
@@ -15,8 +34,8 @@ function Navbar(){
                     </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+                    <input onChange={getSearchText} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <Link to="/search"><button onClick={search} className="btn btn-outline-success my-2 my-sm-0" type="button">Search</button></Link>
                 </form>
                 <Link to="/login"><button className="nav-link" style={{border:"none",background:"none"}}>Login</button></Link>
                 <Link to="/register"><button className="nav-link" style={{border:"none",background:"none"}}>Register</button></Link>
@@ -25,4 +44,4 @@ function Navbar(){
     )
 }
 
-export default Navbar;
+export default withRouter(Navbar);

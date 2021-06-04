@@ -16,7 +16,7 @@ function Signup() {
             data:{name:name,email:email,password:pwd},
         }).then((response)=>{
               console.log("response from cakes api" , response , response.data);
-              alert("Registered successfully.");
+              alert(response.data.message);
         },(error)=>{
             console.log("error from cakes api" , error)
         })

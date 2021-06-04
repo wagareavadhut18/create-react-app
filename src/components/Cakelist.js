@@ -18,7 +18,7 @@ function Cakelist(){
      }, []);
     
     return (
-        <div className="row pl-4">
+        <div className="row px-2">
             { cakelist.map((each,index)=>{
                 return (<Cake cake={each} key={index}></Cake>)
             })}

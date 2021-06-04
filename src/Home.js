@@ -3,10 +3,10 @@ import Cakelist from "./components/Cakelist";
 
 function Home() {
   return (
-        <div>
+        <>
             <Carousel></Carousel>
             <Cakelist></Cakelist>
-        </div>
+        </>
    
   );
 }
