@@ -18,10 +18,13 @@ function Cakelist(){
      }, []);
     
     return (
-        <div className="row px-2">
-            { cakelist.map((each,index)=>{
-                return (<Cake cake={each} key={index}></Cake>)
-            })}
+        <div className="container mt-4">
+	        <h2 className="text-center">Available Cakes</h2>
+            <div className="row">
+                { cakelist.map((each,index)=>{
+                    return (<Cake cake={each} key={index}></Cake>)
+                })}
+            </div>
         </div>
         
     )
