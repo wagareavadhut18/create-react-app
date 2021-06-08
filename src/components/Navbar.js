@@ -1,4 +1,7 @@
-import { Router, Route,Link, withRouter } from 'react-router-dom';
+import {useState,useEffect,Component} from "react";
+import { BrowserRouter as Router,Route,Link,withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 
 function Navbar(props){
     let searchString = ""
@@ -20,6 +23,12 @@ function Navbar(props){
     //    console.log("event value" , event.target.value)
     }
 
+    let logout = ()=>{
+        props.dispatch({
+          type:"LOGOUT"
+        })
+    }      
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link to="/" className="navbar-brand"><img src="/images/ideaa.png" height="35"/>&nbsp;Ideaa</Link>
@@ -37,11 +46,19 @@ function Navbar(props){
                     <input onChange={getSearchText} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
                     <Link to="/search"><button onClick={search} className="btn btn-outline-success my-2 my-sm-0" type="button">Search</button></Link>
                 </form>
-                <Link to="/login"><button className="nav-link" style={{border:"none",background:"none"}}>Login</button></Link>
-                <Link to="/register"><button className="nav-link" style={{border:"none",background:"none"}}>Register</button></Link>
+                {!props.isloggedin && <Link to="/login"><button className="nav-link" style={{border:"none",background:"none"}}>Login</button></Link>}
+                {!props.isloggedin && <Link to="/register"><button className="nav-link" style={{border:"none",background:"none"}}>Register</button></Link>}
+                {props.isloggedin && <button onClick={logout} className="nav-link text-danger" style={{border:"none",background:"none"}}>Logout</button>}
             </div>
         </nav>
     )
 }
 
-export default withRouter(Navbar);
+function mapStateToProp(state,props){
+    return {
+        username:state["username"],
+        isloggedin:state["isloggedin"]
+    }
+}
+  
+export default connect(mapStateToProp)(withRouter (Navbar));

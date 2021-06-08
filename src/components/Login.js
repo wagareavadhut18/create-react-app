@@ -1,9 +1,11 @@
 import { React } from 'react';
 import { useState } from 'react';
 import axios from "axios";
-import { Redirect } from 'react-router';
+import { Redirect,useHistory } from 'react-router';
+import { BrowserRouter as Router,Route,Link,withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-function Login() {
+function Login(props) {
 
     const [email, setEmail] = useState('');
     const [pwd, setPassword] = useState('');
@@ -40,9 +42,21 @@ function Login() {
                   console.log("response from cakes api" , response , response.data);
     
                   if(response.data.email){
-                    localStorage.setItem("cltoken", response.data.token);
-                    alert("Login successful");
-                    <Redirect to="/"></Redirect>
+                    // localStorage.setItem("cltoken", response.data.token);
+                    localStorage.token = response.data.token
+                    //alert("Login successful");
+                    props.dispatch({
+                        type:"LOGIN",
+                        payload:{
+                            token:response.data.token,
+                            username:response.data.name
+                        }
+                    })
+                    // for redirect to another location
+                    props.history.push("/");
+
+                    // alert("Login successful");
+                    
                         // console.log(this.props.parentprop)
                         // this.props.parentprop.parentfun()
                         // this.props.history.push("/")
@@ -84,4 +98,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default connect()(withRouter(Login));//syntax for redux and dispatch
