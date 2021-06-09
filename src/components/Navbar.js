@@ -55,9 +55,10 @@ function Navbar(props){
 }
 
 function mapStateToProp(state,props){
+    // console.log("state>>>",state.AuthReducer,"props>>>>",props)
     return {
-        username:state["username"],
-        isloggedin:state["isloggedin"]
+        username:state.AuthReducer.username,
+        isloggedin:state.AuthReducer.isloggedin
     }
 }
   

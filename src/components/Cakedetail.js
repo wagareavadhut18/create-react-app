@@ -1,8 +1,11 @@
 import querystring from "query-string";
 import Cake from './Cake';
+import { Redirect,useHistory } from 'react-router';
 import {Link} from "react-router-dom"
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+
 function Cakedetail(props){
     var id = props.match.params.cakeid;
     //console.log('????',id)
@@ -14,13 +17,38 @@ function Cakedetail(props){
 		let ratingString=(Math.max(0, (Math.min(5, parseFloat(value)))) * 16)+"px";
 		setRatingWidth(ratingString)
 	}
+
+    let addtocart = function(){
+        console.log("token is here",localStorage.token);
+        axios({
+            url:"https://apibyashu.herokuapp.com/api/addcaketocart",
+            headers:{authtoken:localStorage.token},
+            data:{cakeid:cakedetails.cakeid,name:cakedetails.name,image:cakedetails.image,price:cakedetails.price,weight:cakedetails.weight},
+            method:"post",
+        }).then((response)=>{
+            console.log("Respose from api",response,response.data)
+            props.dispatch({
+                type:"ADDTOCART",
+                payload:{
+                    cart:response.data.data,
+                    totalprice:response.data.price
+                }
+            })
+            props.history.push("/cart");
+            // alert("dfdgfdgfd");
+        },(error)=>{
+            console.log("Error from api",error)
+        }
+
+        )
+    }
     //console.log('details',cakedetails)
     useEffect(()=>{
         axios({
             url:apiurl,
             method:"get",
         }).then((response)=>{
-            console.log("Respose from api",response,response.data)
+            // console.log("Respose from api",response,response.data)
             setCakesdetail(response.data.data)
             starWidth(response.data.data.ratings)
             //console.log('details 2',cakedetails)
@@ -48,14 +76,14 @@ function Cakedetail(props){
                 {cakedetails.name && 
                     <div className="row m-0">
                         <div className="col-lg-4 left-side-product-box pb-3">
-                            <img src={cakedetails.image} className="border p-3" alt={cakedetails.name}/>
+                            <img src={cakedetails.image} className="border p-3" alt={cakedetails.name} style={{width:"100%"}}/>
                         </div>
                         <div className="col-lg-8">
-                            <div className="right-side-pro-detail border p-3 m-0">
+                            <div className="right-side-pro-detail m-0">
                                 <div className="row">
                                     <div className="col-lg-12">						
                                         <h2 className="m-0 p-0">{cakedetails.name}</h2>
-                                        <span>By {cakedetails.owner.name}</span>
+                                        {/* <span>By {cakedetails.owner.name}</span> */}
                                     </div>
                                     <div className="content mt-2 mb-2 col-lg-12">
                                         <div className="ratings"><strong>Ratings: </strong> <span className="product-rating">{cakedetails.ratings}</span><span>/5</span>
@@ -97,14 +125,14 @@ function Cakedetail(props){
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-12">
+                                {/* <div className="col-lg-12">
                                     <h6>Quantity :</h6>
                                     <input type="number" name="quntity" className="form-control text-center w-100"/>
-                                </div>
+                                </div> */}
                                 <div className="col-lg-12 mt-3">
                                     <div className="row">
                                         <div className="col-lg-12 pb-2">
-                                            <a href="/cart" className="btn btn-warning w-100">Add To Cart</a>
+                                            <a  className="btn btn-warning w-100" onClick={addtocart}>Add To Cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -116,4 +144,4 @@ function Cakedetail(props){
         </>
     )
 }
-export default Cakedetail;
+export default connect()(Cakedetail);

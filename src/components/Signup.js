@@ -23,22 +23,22 @@ function Signup() {
 		// alert(email);
 		if(!email){
 			isValid=false;
-			emailErr ="Email is required Field";
+			emailErr ="Email is required";
 		}else if(!pattern.test(email)){
 			isValid=false;
 			emailErr = "Invalid Email Syntax";
 		}
 		if(!name){
 			isValid=false;
-			nameErr ="Name is required Field";
+			nameErr ="Name is required";
 		}
 		if(!pwd){
 			isValid=false;
-			passwordErr = "Password is required Field";
+			passwordErr = "Password is required";
 		}
 		if(!pwd2){
 			isValid=false;
-			password2Err="Confirm Password is required Field";
+			password2Err="Confirm Password is required";
 		}else if(pwd2!==pwd){
 			isValid=false;
 			password2Err="Confirm Password should be same as Password";

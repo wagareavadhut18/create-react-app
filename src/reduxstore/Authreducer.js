@@ -1,6 +1,7 @@
 function Authreducer(state={
 isloggedin:localStorage.token?true:false,
-token:localStorage.token
+token:localStorage.token,
+username:localStorage.username
 },action){
     switch(action.type){
         case "LOGIN":{
@@ -8,7 +9,7 @@ token:localStorage.token
             state["token"]=action.payload?.token
             state["username"]=action.payload?.username
             state["isloggedin"] = true
-            alert(state.token)
+            // alert(state["username"])
             return state
         }
         case "LOGOUT":{

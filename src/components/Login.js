@@ -21,14 +21,14 @@ function Login(props) {
 		// alert(email);
 		if(!email){
 			isValid=false;
-			emailErr ="Email is required Field";
+			emailErr ="Email is required";
 		}else if(!pattern.test(email)){
 			isValid=false;
 			emailErr = "Invalid Email Syntax";
 		}
 		if(!pwd){
 			isValid=false;
-			passwordErr = "Password is required Field";
+			passwordErr = "Password is required";
 		}
         setemailError(emailErr)
         setpasswordError(passwordErr)
@@ -39,12 +39,13 @@ function Login(props) {
                 method:"post",
                 data:{email:email,password:pwd},
             }).then((response)=>{
-                  console.log("response from cakes api" , response , response.data);
+                //   console.log("response from cakes api" , response , response.data);
     
                   if(response.data.email){
                     // localStorage.setItem("cltoken", response.data.token);
                     localStorage.token = response.data.token
-                    //alert("Login successful");
+                    localStorage.username = response.data.name
+                    // alert(localStorage.username);
                     props.dispatch({
                         type:"LOGIN",
                         payload:{
