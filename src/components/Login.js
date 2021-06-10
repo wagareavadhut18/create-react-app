@@ -1,9 +1,9 @@
 import { React } from 'react';
 import { useState } from 'react';
-import axios from "axios";
 import { Redirect,useHistory } from 'react-router';
 import { BrowserRouter as Router,Route,Link,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {loginmiddleware} from "../reduxstore/middlewares"
 
 function Login(props) {
 
@@ -34,40 +34,8 @@ function Login(props) {
         setpasswordError(passwordErr)
 
 		if(isValid){
-            axios({
-                url:"https://apibyashu.herokuapp.com/api/login",
-                method:"post",
-                data:{email:email,password:pwd},
-            }).then((response)=>{
-                //   console.log("response from cakes api" , response , response.data);
-    
-                  if(response.data.email){
-                    // localStorage.setItem("cltoken", response.data.token);
-                    localStorage.token = response.data.token
-                    localStorage.username = response.data.name
-                    // alert(localStorage.username);
-                    props.dispatch({
-                        type:"LOGIN",
-                        payload:{
-                            token:response.data.token,
-                            username:response.data.name
-                        }
-                    })
-                    // for redirect to another location
-                    props.history.push("/");
-
-                    // alert("Login successful");
-                    
-                        // console.log(this.props.parentprop)
-                        // this.props.parentprop.parentfun()
-                        // this.props.history.push("/")
-                   }
-                   if(response.data.message){
-                        alert(response.data.message)
-                   }
-            },(error)=>{
-                console.log("error from cakes api" , error)
-            })
+            var middlefunction = loginmiddleware({email:email,password:pwd});
+			props.dispatch(middlefunction);
 		}
         // console.log(name,email,pwd);
        
@@ -99,4 +67,16 @@ function Login(props) {
     )
 }
 
-export default connect()(withRouter(Login));//syntax for redux and dispatch
+
+Login =connect(function(state,props){
+	// alert("props" + JSON.stringify(props))
+  if(state.AuthReducer?.isloggedin==true){
+      props.history.push("/")
+  }else{
+	  return {
+		  isloading:state.AuthReducer?.isloading
+	  }
+  }
+})(Login) 
+
+export default withRouter(Login);//syntax for redux and dispatch

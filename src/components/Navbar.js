@@ -27,6 +27,7 @@ function Navbar(props){
         props.dispatch({
           type:"LOGOUT"
         })
+        props.history.push("/");
     }      
 
     return (
@@ -55,7 +56,7 @@ function Navbar(props){
 }
 
 function mapStateToProp(state,props){
-    // console.log("state>>>",state.AuthReducer,"props>>>>",props)
+    // console.log("state>>>",state,"props>>>>",props)
     return {
         username:state.AuthReducer.username,
         isloggedin:state.AuthReducer.isloggedin
