@@ -1,5 +1,4 @@
-import {useState,useEffect,Component} from "react";
-import { BrowserRouter as Router,Route,Link,withRouter } from 'react-router-dom';
+import { BrowserRouter as React,Link,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
@@ -31,8 +30,8 @@ function Navbar(props){
     }      
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link to="/" className="navbar-brand"><img src="/images/ideaa.png" height="35"/>&nbsp;Ideaa</Link>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <Link to="/" className="navbar-brand"><img src="/images/ideaa.png" alt="" height="35"/>&nbsp;Ideaa</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -49,7 +48,24 @@ function Navbar(props){
                 </form>
                 {!props.isloggedin && <Link to="/login"><button className="nav-link" style={{border:"none",background:"none"}}>Login</button></Link>}
                 {!props.isloggedin && <Link to="/register"><button className="nav-link" style={{border:"none",background:"none"}}>Register</button></Link>}
-                {props.isloggedin && <button onClick={logout} className="nav-link text-danger" style={{border:"none",background:"none"}}>Logout</button>}
+                {props.isloggedin && 
+                    <>
+                        <ul className="navbar-nav">
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {/* <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" alt="" width="40" height="40" className="rounded-circle"/> */}
+                                {props.username}
+                                </a>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                {/* <a className="dropdown-item" href="#">Dashboard</a> */}
+                                {/* <a className="dropdown-item" href="#">Edit Profile</a> */}
+                                <a className="dropdown-item" href="#" onClick={logout}>Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <button className="btn"><i className="fas fa-shopping-cart"></i><span className="badge badge-pill badge-success t-n1 l-n1">4</span></button>
+                    </>
+                }
             </div>
         </nav>
     )

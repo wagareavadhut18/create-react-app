@@ -1,6 +1,3 @@
-import querystring from "query-string";
-import Cake from './Cake';
-import { Redirect,useHistory } from 'react-router';
 import {Link} from "react-router-dom"
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -9,7 +6,7 @@ import { connect } from 'react-redux';
 function Cakedetail(props){
     var id = props.match.params.cakeid;
     //console.log('????',id)
-    var apiurl="https://apibyashu.herokuapp.com/api/cake/"+id;
+    var apiurl=process.env.REACT_APP_BASE_URL+"cake/"+id;
     var [cakedetails, setCakesdetail] = useState([])
     var [ratingWidth, setRatingWidth]=useState(0);
     let starWidth=(value)=>{
@@ -19,28 +16,17 @@ function Cakedetail(props){
 	}
 
     let addtocart = function(){
-        console.log("token is here",localStorage.token);
-        axios({
-            url:"https://apibyashu.herokuapp.com/api/addcaketocart",
-            headers:{authtoken:localStorage.token},
-            data:{cakeid:cakedetails.cakeid,name:cakedetails.name,image:cakedetails.image,price:cakedetails.price,weight:cakedetails.weight},
-            method:"post",
-        }).then((response)=>{
-            console.log("Respose from api",response,response.data)
-            props.dispatch({
-                type:"ADDTOCART",
-                payload:{
-                    cart:response.data.data,
-                    totalprice:response.data.price
-                }
-            })
-            props.history.push("/cart");
-            // alert("dfdgfdgfd");
-        },(error)=>{
-            console.log("Error from api",error)
-        }
-
-        )
+        // console.log("token is here",localStorage.token);
+        props.dispatch({
+            type:"ADDTOCART",
+            payload:{
+                    cakeid:cakedetails.cakeid,
+                    name:cakedetails.name,
+                    image:cakedetails.image,
+                    price:cakedetails.price,
+                    weight:cakedetails.weight
+            }
+        })
     }
     //console.log('details',cakedetails)
     useEffect(()=>{
@@ -132,7 +118,7 @@ function Cakedetail(props){
                                 <div className="col-lg-12 mt-3">
                                     <div className="row">
                                         <div className="col-lg-12 pb-2">
-                                            <a  className="btn btn-warning w-100" onClick={addtocart}>Add To Cart</a>
+                                            <a href="#" className="btn btn-warning w-100" onClick={addtocart}>Add To Cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -144,4 +130,5 @@ function Cakedetail(props){
         </>
     )
 }
+
 export default connect()(Cakedetail);

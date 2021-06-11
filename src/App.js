@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import Home from "./Home";
-import {BrowserRouter as Router, Route, Switch, withRouter} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Cakedetail from "./components/Cakedetail";
 import Search from "./components/Search";
 import Pagenotfound from "./components/Pagenotfound";

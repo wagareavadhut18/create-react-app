@@ -2,17 +2,18 @@ import axios from "axios"
 export function loginmiddleware(data){
 //    alert(JSON.stringify(data))
     return function(dispatch){
+        // console.log(process.env);
         dispatch({
             type:"LOGIN_STARTED"
         })
         axios({
-            url: "https://apibyashu.herokuapp.com/api"+'/login',
+            url: process.env.REACT_APP_BASE_URL+"login",
             method: 'post',
             data:data
         }).then(res => {
             if (res.data.email) {
                 localStorage.setItem('token', res.data.token)
-                localStorage.setItem('userData', JSON.stringify(res.data))
+                localStorage.setItem('username', res.data.name)
                 dispatch({
                     type: "LOGIN_SUCCESS",
                     payload: {

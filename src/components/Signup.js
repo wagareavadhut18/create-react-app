@@ -50,7 +50,7 @@ function Signup() {
 
 		if(isValid){
             axios({
-                url:"https://apibyashu.herokuapp.com/api/register",
+                url:process.env.REACT_APP_BASE_URL+"register",
                 method:"post",
                 data:{name:name,email:email,password:pwd},
             }).then((response)=>{

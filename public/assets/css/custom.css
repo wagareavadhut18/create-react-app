@@ -1,3 +1,12 @@
 .rhm :hover{
     transform: scale(1.02);
 }
+#root{
+    background-color: #f8f9fa!important;
+}
+.t-n1{
+    top:-0.7rem !important;
+}
+.l-n1{
+    left:-0.3rem !important;
+}

@@ -1,7 +1,6 @@
 import { React } from 'react';
 import { useState } from 'react';
-import { Redirect,useHistory } from 'react-router';
-import { BrowserRouter as Router,Route,Link,withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {loginmiddleware} from "../reduxstore/middlewares"
 
@@ -70,7 +69,7 @@ function Login(props) {
 
 Login =connect(function(state,props){
 	// alert("props" + JSON.stringify(props))
-  if(state.AuthReducer?.isloggedin==true){
+  if(state.AuthReducer?.isloggedin===true){
       props.history.push("/")
   }else{
 	  return {

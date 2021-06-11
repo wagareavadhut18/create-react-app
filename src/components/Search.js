@@ -7,7 +7,7 @@ function Search(props) {
 
     var [cakelist,setCakes] = useState([]);
     var query = querystring.parse(props.location.search);
-    var apiurl="https://apibyashu.herokuapp.com/api/searchcakes?q="+query.q;
+    var apiurl=process.env.REACT_APP_BASE_URL+"searchcakes?q="+query.q;
     useEffect(()=>{
         axios({
             url:apiurl,
@@ -18,21 +18,23 @@ function Search(props) {
         },(error)=>{
             console.log("error from cakes api" , error)
         })
-     }, [query.q]);
+     }, [apiurl]);
 
      if (cakelist.length === 0) {
-            return (<div className="row">
-                        <img src="/images/no_data.png"/>
+            return (<div className="container pt-3 pb-3">
+                        <img className="img-responsive w-100" src="/images/not-found.png" alt=""/>
                 </div>
             );
      }
 
      return (
-            <div className="row px-2">
+        <div className="container mt-4">
+            <div className="row">
                 { cakelist.map((each,index)=>{
                     return (<Cake cake={each} key={index}></Cake>)
                 })}
-            </div>   
+            </div>
+        </div>
      )
 }
 

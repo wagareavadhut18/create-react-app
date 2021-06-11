@@ -7,7 +7,7 @@ function Cakelist(){
     var [cakelist,setCakes] = useState([]);
     useEffect(()=>{
         axios({
-            url:"https://apibyashu.herokuapp.com/api/allcakes",
+            url:process.env.REACT_APP_BASE_URL+"allcakes",
             method:"get",
         }).then((response)=>{
             //   console.log("response from cakes api" , response , response.data) 

@@ -5,7 +5,7 @@ function Cake(props){
             return (
                     <div className="rhm col-md-3">
                         <div className="card mt-3">
-                            {props.cake.image && <img className="card-img-top" src={props.cake.image} alt="Card image cap" style={{height:"200px"}}/> }
+                            {props.cake.image && <img className="card-img-top" src={props.cake.image} alt="" style={{height:"200px"}}/> }
                             
                             <Link to={'/cake/'+props.cake.cakeid}>
                                 <div className="card-body" style={{"minHeight":"20vh"}}>
