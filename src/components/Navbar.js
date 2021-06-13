@@ -1,8 +1,20 @@
+import { useEffect} from "react";
 import { BrowserRouter as React,Link,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import {CartListMiddleware} from "../reduxstore/middlewares";
 
 function Navbar(props){
+
+    useEffect(()=>{
+        if(props.isloggedin ==true || props.status==true){
+            // alert("i am called")
+            const token = localStorage.token;
+            props.dispatch(CartListMiddleware(token)); 
+            // props.dispatch(OrderMiddleware(token)); 
+        }
+
+    },[props.isLogedIn,props.status]);
+
     let searchString = ""
     let search = (event)=>{
         event.preventDefault()
@@ -20,6 +32,10 @@ function Navbar(props){
     let getSearchText = function(event){
         searchString = event.target.value
     //    console.log("event value" , event.target.value)
+    }
+
+    const goToCart=(e)=>{
+        props.history.push('/cart')
     }
 
     let logout = ()=>{
@@ -63,7 +79,7 @@ function Navbar(props){
                                 </div>
                             </li>
                         </ul>
-                        <button className="btn"><i className="fas fa-shopping-cart"></i><span className="badge badge-pill badge-success t-n1 l-n1">4</span></button>
+                        <i className="fas fa-shopping-cart" onClick={goToCart}></i><span className="badge badge-pill badge-success mt-n1 ml-n1">{props.cartcount.length==0?"0":props.cartcount.length}</span>
                     </>
                 }
             </div>
@@ -73,10 +89,13 @@ function Navbar(props){
 
 function mapStateToProp(state,props){
     // console.log("state>>>",state,"props>>>>",props)
+    // console.log("cart count>>",state.CartReducer.cart.length);
     return {
         username:state.AuthReducer.username,
-        isloggedin:state.AuthReducer.isloggedin
+        isloggedin:state.AuthReducer.isloggedin,
+        cartcount:state.CartReducer.cart,
+        ordercount:state.CartReducer.totalorders
     }
 }
-  
+
 export default connect(mapStateToProp)(withRouter (Navbar));

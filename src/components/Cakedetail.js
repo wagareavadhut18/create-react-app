@@ -2,12 +2,15 @@ import {Link} from "react-router-dom"
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import Cake from './Cake';
+import { CartListMiddleware } from '../reduxstore/middlewares';
 
 function Cakedetail(props){
-    var id = props.match.params.cakeid;
+    var cakeid = props.match.params.cakeid;
     //console.log('????',id)
-    var apiurl=process.env.REACT_APP_BASE_URL+"cake/"+id;
-    var [cakedetails, setCakesdetail] = useState([])
+    
+    const [cakedetails, setCakesdetail] = useState({})
+    const [cakelist, setCakesList] = useState({})
     var [ratingWidth, setRatingWidth]=useState(0);
     let starWidth=(value)=>{
 		
@@ -16,22 +19,40 @@ function Cakedetail(props){
 	}
 
     let addtocart = function(){
+        if (!localStorage.token) {
+            props.history.push('/login')
+            return false;
+        }
         // console.log("token is here",localStorage.token);
-        props.dispatch({
-            type:"ADDTOCART",
-            payload:{
-                    cakeid:cakedetails.cakeid,
-                    name:cakedetails.name,
-                    image:cakedetails.image,
-                    price:cakedetails.price,
-                    weight:cakedetails.weight
-            }
+        let  apiurl =process.env.REACT_APP_BASE_URL+"addcaketocart";
+
+        axios({
+                method:"post",
+                url:apiurl,
+                headers:{
+                authtoken:localStorage.token
+            },
+            data:{
+                cakeid:cakedetails.cakeid,
+                name:cakedetails.name,
+                image:cakedetails.image,
+                price:cakedetails.price,
+                weight:cakedetails.weight
+            }}).then((res)=>{
+
+            const token = localStorage.token;
+            props.dispatch(CartListMiddleware(token)); 
+            //  setTimeout(function(){ 
+            //    props.history.push('/cart')
+            //  }, 1000);
+        } ,(error)=>{
+                console.log(error)
         })
     }
     //console.log('details',cakedetails)
     useEffect(()=>{
         axios({
-            url:apiurl,
+            url:process.env.REACT_APP_BASE_URL+"cake/"+cakeid,
             method:"get",
         }).then((response)=>{
             // console.log("Respose from api",response,response.data)
@@ -43,20 +64,35 @@ function Cakedetail(props){
         }
 
         )
-    },[]
+    },[cakeid])
 
-    )
+    useEffect(() => {
+        axios({
+            url:process.env.REACT_APP_BASE_URL+`searchcakes?q=${cakedetails.flavour}`,
+            method:"get",
+        }).then((res) => {
+            const Data = res.data.data;
+            // console.log(Data);
+            setCakesList(Data);
+        },(error)=>{
+            console.log("Error from api",error)
+        }
+        )
+    }, [cakedetails]);
+
     return  (
         <>
             <div className="container">
-                <div className="row hedding m-0 pl-3 pt-0 pb-3">
-                    <nav>
-                        <ol className="breadcrumb" style={{backgroundColor:"transparent"}}>
-                            <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                            <li className="breadcrumb-item active"><Link to="#">Cakes</Link></li>
-                            <li className="breadcrumb-item active">{cakedetails.name}</li>
-                        </ol>
-                    </nav>
+                <div className="row hedding m-0 mt-2">
+                    <div className="col-md-12">
+                        <nav aria-label="breadcrumb">
+                            <ol className="breadcrumb" >
+                                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+                                <li className="breadcrumb-item active"><Link to="#">Cakes</Link></li>
+                                <li className="breadcrumb-item active">{cakedetails.name}</li>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
                 {!cakedetails.name && <div className="m-0 pl-3 pt-0 pb-3">Loading .....</div>}
                 {cakedetails.name && 
@@ -126,6 +162,21 @@ function Cakedetail(props){
                         </div>
                     </div>
                 }
+                {cakelist.length > 0 &&  
+                    <div className="row m-0">
+                        <div className="col-md-12">
+                            <hr/>
+                            <h4 className="text-center">RELATED PRODUCTS</h4>
+                            <hr/>
+                           <div className="row pb-3">
+                                { cakelist.map((each,index)=>{
+                                    return (<Cake cake={each} key={index}></Cake>)
+                                })}
+                           </div>
+                        </div>
+                    </div>
+                }
+                    
             </div>
         </>
     )
