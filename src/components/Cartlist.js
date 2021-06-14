@@ -17,7 +17,7 @@ function Cartlist(props){
 
     const addtocart = (e,data)=>{
         // alert(JSON.stringify(data.price));
-        console.log("adding data>>",data);
+        console.log("adding data from cartlist>>>>",data);
 
         let  apiurl =process.env.REACT_APP_BASE_URL+"addcaketocart";
 
@@ -97,7 +97,6 @@ function Cartlist(props){
                 </div>
             </td>
             <td className="text-center" style={{width:"10%"}}><div className="col">&#8377;{props.carts.price.toFixed(2)}</div></td>
-            <td className="text-center" style={{width:"10%"}}><div className="col">&#8377;{props.carts.price.toFixed(2) * props.carts.quantity}</div></td>
             <td className="text-center" style={{width:"20%"}}><div className="col"><button className="btn btn-sm btn-default" onClick={(e)=>removeproduct(e,props.carts.cakeid,"removecakefromcart")}>&nbsp;<i className="fa fa-trash text-danger"></i>&nbsp;</button></div></td>
         </tr>
     )

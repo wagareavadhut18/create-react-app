@@ -79,7 +79,7 @@ function Navbar(props){
                                 </div>
                             </li>
                         </ul>
-                        <i className="fas fa-shopping-cart" onClick={goToCart}></i><span className="badge badge-pill badge-success mt-n1 ml-n1">{props.cartcount.length==0?"0":props.cartcount.length}</span>
+                        <i className="fas fa-shopping-cart" onClick={goToCart}></i><span className="badge badge-pill badge-success mt-n1 ml-n1">{props.totalQuantity}</span>
                     </>
                 }
             </div>
@@ -94,6 +94,7 @@ function mapStateToProp(state,props){
         username:state.AuthReducer.username,
         isloggedin:state.AuthReducer.isloggedin,
         cartcount:state.CartReducer.cart,
+        totalQuantity:state.CartReducer.totalQuantity,
         ordercount:state.CartReducer.totalorders
     }
 }

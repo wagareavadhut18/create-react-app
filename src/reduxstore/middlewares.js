@@ -31,7 +31,7 @@ export function loginmiddleware(data){
 // login hit main yahan se maar raha hu agar toh woh bhi toh yahan mujhe
 }
 
-export function CartListMiddleware(data){
+export function CartListMiddleware(token){
     //alert(1)
     // alert(data)
     return function(dispatch){
@@ -39,12 +39,12 @@ export function CartListMiddleware(data){
                 method:"post",
                 url:process.env.REACT_APP_BASE_URL+'cakecart',
                 headers:{
-                    authtoken:data
+                    authtoken:token
                 },
                 data:{}}
         ).then(res => {
             const Data = res.data.data;
-            // console.log(Data);
+            console.log("data from cart to reducer add to cart>>>>>>>>>>",Data);
             dispatch({
                 type:'ADDTOCART',
                 payload:{

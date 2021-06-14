@@ -65,7 +65,6 @@ function Cart(props){
                                                     <th>Name</th>
                                                     <th className="text-center">Quantity</th>
                                                     <th className="text-center">Price</th>
-                                                    <th className="text-center">Amount</th>
                                                     <th className="text-center"><a className="btn btn-sm btn-outline-danger" href="#" onClick={emptycart}>Clear All</a></th>
                                                 </tr>
                                             </thead>
@@ -95,8 +94,8 @@ function Cart(props){
 }
 
 function mapStateToProp(state,props){
-    console.log("state>>>",state,"props>>>>",props)
-    console.log("totalprice>>",state.CartReducer.totalprice);
+    // console.log("state>>>",state,"props>>>>",props)
+    // console.log("totalprice>>",state.CartReducer.totalprice);
     return {
         // username:state.AuthReducer.username,
         // isloggedin:state.AuthReducer.isloggedin,

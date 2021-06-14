@@ -13,41 +13,45 @@ function Cartreducer(state={
             state ={...state};
             state["cart"]=[];
             state["totalprice"]=0;
+            state["totalQuantity"]=0
             state["cart"] =[...state.cart, ...action.payload.cakedata];
-            console.log(state["cart"]);
+            console.log("data before totalprice",state["cart"]);
             state["status"] =false;
             if( state["cart"].length>0){
                 state["cart"].forEach(function(x, index, arry){
-                    state["totalprice"] += x.price * x.quantity;
-                    // state["totalprice"] += x.price;
+                    // state["totalprice"] += x.price * x.quantity;
+                    state["totalprice"] += x.price;
+                    state["totalQuantity"] += x.quantity
                 });
             }
             else{
                 state["totalprice"]=-1;
             }
-            // console.log("sum is,",state["totalprice"]);
+            // console.log("total quantity>>>>",state["totalQuantity"],"data after total price",state["totalprice"],"sum is,",state["totalprice"]);
             state["isLoading"] =false;
             return state;
     
         case "EMPTYCART":
                 state={...state};
                 state["cart"]=[];
+                state["totalQuantity"]=0;
                 state["status"]=true;
                 state["totalprice"] =0;
                 return state;
     
         case "REMOVESPECIC":
             state={...state}
+            state["totalQuantity"]=0
+            state["totalprice"] =0;
             const filteredCart = state["cart"].filter((item) => item.cakeid !== action.payload.cakeid);
-            // for(let i=0;i<state["cart"].length;i++){
-            //     // console.log("array cakeid",state["cart"][i].cakeid,"<<<payload cakeid",action.payload.cakeid);
-            //     if(state["cart"][i].cakeid === action.payload.cakeid){
-            //         state["cart"].slice(i);
-            //     }
-            //     console.log(state["cart"]);
-            // }
-            // console.log(filteredCart);
             state["cart"]=filteredCart;
+            if( state["cart"].length>0){
+                state["cart"].forEach(function(x, index, arry){
+                    // state["totalprice"] += x.price * x.quantity;
+                    state["totalprice"] += x.price;
+                    state["totalQuantity"] += x.quantity
+                });
+            }
             state["status"]=action.payload.status;
             return state;
         
@@ -61,8 +65,8 @@ function Cartreducer(state={
                     totalqt += item.quantity;
                 });
                 state["totalQuantity"] = totalqt;
-                console.log("cake is>>>>>>",state["cart"]);
-                console.log("cake index is>>>>>>",objIndex,"total>>>>",totalqt);
+                // console.log("cake is>>>>>>",state["cart"]);
+                // console.log("cake index is>>>>>>",objIndex,"total>>>>",totalqt);
                 return state;
 
         case "ALLORDERS":
