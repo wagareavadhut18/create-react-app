@@ -44,7 +44,7 @@ export function CartListMiddleware(token){
                 data:{}}
         ).then(res => {
             const Data = res.data.data;
-            console.log("data from cart to reducer add to cart>>>>>>>>>>",Data);
+            // console.log("data from cart to reducer add to cart>>>>>>>>>>",Data);
             dispatch({
                 type:'ADDTOCART',
                 payload:{
@@ -142,14 +142,14 @@ export function RemoveCakeByQuantityMiddleware(token,id,URI){
      }
 }
   
-export function OrderMiddleware(data){
+export function OrderMiddleware(token){
      return function(dispatch){
          axios(
              {
                  method:"post",
                  url:process.env.REACT_APP_BASE_URL+'cakeorders',
                  headers:{
-                    authtoken:data
+                    authtoken:token
                  },
                  data:{}})
                      .then(res => {
@@ -167,7 +167,7 @@ export function OrderMiddleware(data){
 }
   
   
-export function PlaceOrderMiddleware(token,data,cart,price){
+export function PlaceOrderMiddleware(token,data){
     return function(dispatch){
         axios(
             {
@@ -176,23 +176,17 @@ export function PlaceOrderMiddleware(token,data,cart,price){
                 headers:{
                    authtoken:token
                 },
-                data:{
-                  city:data.city,
-                  name:data.username,
-                  address:data.address,
-                  pincode:data.pincode,
-                  phone:data.phone,
-                  cakes:cart,
-                  price:price
-                }})
-                    .then(res => {
-                        const Data = res.data.error!=null?[]:res.data.data;
-                        dispatch({
-                            type:'PLACEORDER',
-                            payload:{
-                             success:true
-                            }
-                        });
-                    });
+                data:data
+            })
+            .then(res => {
+                const Data = res.data.error!=null?[]:res.data.data;
+                console.log("Order placed result>>>",res);
+                dispatch({
+                    type:'PLACEORDER',
+                    payload:{
+                        success:true
+                    }
+                });
+            });
     }
 }

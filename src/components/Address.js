@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import { Route,Link, Redirect} from "react-router-dom";
+import { React,useState } from 'react';
+import { Route,Link, Redirect, withRouter} from "react-router-dom";
+import { connect } from "react-redux";
 function Address(props){
+    // console.log("address");
     const [username, setUsername] = useState(props.username);
-    const [phone, setPhone] = useState('');
-    const [city, setCity] = useState('');
-    const [pincode, setPincode] = useState('');
-    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState(props.userdata.phone?props.userdata.phone:"");
+    const [city, setCity] = useState(props.userdata.city?props.userdata.city:"");
+    const [pincode, setPincode] = useState(props.userdata.pincode?props.userdata.pincode:"");
+    const [address, setAddress] = useState(props.userdata.address?props.userdata.address:"");
     const [usernameError, setUsernameError] = useState('');
     const [phoneError, setPhoneError] = useState('');
     const [cityError, setCityError] = useState('');
@@ -46,6 +48,23 @@ function Address(props){
         setCityError(cityError)
         setPincodeError(pincodeError)
         setAddressError(addressError)
+        if(isValid){
+            var data = {
+                username:username,
+                phone:phone,
+                city:city,
+                pincode:pincode,
+                address:address
+            }
+            props.dispatch({
+                type:'ORDERDETAILS',
+                payload:{
+                    userdata:data
+                }
+            });
+            props.history.push("/checkout/confirm");
+            // console.log(data);
+		}
     }
     return (
         <div className="container">
@@ -86,4 +105,4 @@ function Address(props){
         </div>
     )
 }
-export default Address
+export default connect()(withRouter(Address))

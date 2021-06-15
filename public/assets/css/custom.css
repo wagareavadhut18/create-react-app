@@ -1,5 +1,9 @@
+.rhm{
+    transition: transform 4s;
+    transform: scale(1);
+}
 .rhm :hover{
-    transform: scale(1.02);
+    transform: scale(1.05);
 }
 #root{
     background-color: #f8f9fa!important;

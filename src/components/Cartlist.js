@@ -84,13 +84,13 @@ function Cartlist(props){
             <td style={{width:"20%"}}>
                 <div className="input-group col">
                     <span className="input-group-btn">
-                        <button type="button" className="quantity-left-minus btn btn-danger btn-number" onClick={(e)=>rmquantity(e,props.carts.cakeid)}  data-type="minus" data-field="">
+                        <button type="button" className="quantity-left-minus btn btn-outline-danger btn-number" onClick={(e)=>rmquantity(e,props.carts.cakeid)}  data-type="minus" data-field="">
                             <i className="fa fa-minus-circle" style={{fontSize:"1.2rem"}}></i>
                         </button>
                     </span>
                     <input type="text" name="quantity" className="form-control input-number" value={props.carts.quantity} style={{width:"10%"}} readOnly/>
                     <span className="input-group-btn">
-                        <button type="button" className="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
+                        <button type="button" className="quantity-right-plus btn btn-outline-success btn-number" data-type="plus" data-field="">
                             <i className="fa fa-plus-circle" onClick={(e)=>addtocart(e,props.carts)} style={{fontSize:"1.2rem"}}></i>
                         </button>
                     </span>

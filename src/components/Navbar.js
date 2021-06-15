@@ -1,7 +1,7 @@
 import { useEffect} from "react";
 import { BrowserRouter as React,Link,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {CartListMiddleware} from "../reduxstore/middlewares";
+import {CartListMiddleware, OrderMiddleware} from "../reduxstore/middlewares";
 
 function Navbar(props){
 
@@ -14,6 +14,10 @@ function Navbar(props){
         }
 
     },[props.isLogedIn,props.status]);
+
+    useEffect(()=>{
+        props.dispatch(OrderMiddleware(localStorage.token));
+    },[])
 
     let searchString = ""
     let search = (event)=>{

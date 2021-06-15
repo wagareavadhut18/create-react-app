@@ -1,6 +1,7 @@
 function Cartreducer(state={
         cart:[],
         totalQuantity:0,
+        orderDetails:[],
         totalprice:0,
         totalorders:0,
         isLoading:true,
@@ -69,6 +70,12 @@ function Cartreducer(state={
                 // console.log("cake index is>>>>>>",objIndex,"total>>>>",totalqt);
                 return state;
 
+        case "ORDERDETAILS":
+                state={...state}
+                state["orderDetails"] = []
+                state["orderDetails"] = action.payload.userdata
+                return state
+
         case "ALLORDERS":
             state["orders"]=[];
         // console.log('orders', action.payload.orders)
@@ -81,6 +88,10 @@ function Cartreducer(state={
 
         case "PLACEORDER":
                 state={...state}
+                state["orderDetails"]=[];
+                state["cart"]=[];
+                state["totalQuantity"]=0;
+                state["totalprice"] =0;
                 state["ordersuccess"]=action.payload.status;
                 return state;
     
