@@ -4,10 +4,12 @@ import {connect} from "react-redux";
 import moment from "moment";
 
 function Myorders(props){
-  const [orders,setOrders] = useState([]);
+  let [orders,setOrders] = useState([]);
+  const [ordertotal,setTotalOrders] = useState(0);
     useEffect(()=>{
         setOrders(props.orderlist);
-    },[props.orders])
+        setTotalOrders(props.totalorders);
+    },[props.totalorders])
     // console.log(props);
     return (
         <div className="container">
@@ -16,8 +18,7 @@ function Myorders(props){
                     <h4 className="float-right">Total Orders: {props.totalorders}</h4>
                     <h4>My Orders</h4>
                     <hr/>
-                    {!orders && <div className="m-0 pl-3 pt-0 pb-3">Loading .....</div>}
-                    {orders && orders.map((x,index)=>
+                    {orders.length > 0 && orders.map((x,index)=>
                       <div id={`accordion${index}`}>
                         <div className="card">
                           <div className="card-header" id={`headingOne${index}`}>

@@ -47,7 +47,11 @@ function Navbar(props){
           type:"LOGOUT"
         })
         props.history.push("/");
-    }      
+    }
+
+    let myorders = ()=>{
+        props.history.push("/orders");
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
@@ -80,6 +84,7 @@ function Navbar(props){
                                 {/* <a className="dropdown-item" href="#">Dashboard</a> */}
                                 {/* <a className="dropdown-item" href="#">Edit Profile</a> */}
                                 <a className="dropdown-item" href="#" onClick={logout}>Log Out</a>
+                                <a className="dropdown-item" href="#" onClick={myorders}>My Orders</a>
                                 </div>
                             </li>
                         </ul>

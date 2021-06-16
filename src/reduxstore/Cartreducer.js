@@ -3,9 +3,9 @@ function Cartreducer(state={
         totalQuantity:0,
         orderDetails:[],
         totalprice:0,
-        totalorders:0,
+        totalorders:localStorage.orders ? localStorage.orders.length : 0,
         isLoading:true,
-        orders:[],
+        orders:localStorage.orders ? localStorage.orders : [],
         status:false,
         ordersuccess:false
     },action){
@@ -73,16 +73,19 @@ function Cartreducer(state={
         case "ORDERDETAILS":
                 state={...state}
                 state["orderDetails"] = []
+                // localStorage.orderDetails = action.payload.userdata
                 state["orderDetails"] = action.payload.userdata
                 return state
 
         case "ALLORDERS":
             state["orders"]=[];
-        // console.log('orders', action.payload.orders)
+            // console.log('orders', action.payload.orders)
             if(action.payload.orders.length>0){
                 state["orders"] =[...state.orders, ...action.payload.orders];
             }
-            state["totalorders"] =state["orders"].length;
+            localStorage.orders = [...state.orders, ...action.payload.orders];
+            state["totalorders"] = state["orders"].length;
+            localStorage.totalorders = state["orders"].length;
             state["isLoading"] =false;
             return state;
 
