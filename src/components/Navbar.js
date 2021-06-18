@@ -9,15 +9,12 @@ function Navbar(props){
         if(props.isloggedin ==true || props.status==true){
             // alert("i am called")
             const token = localStorage.token;
-            props.dispatch(CartListMiddleware(token)); 
+            props.dispatch(CartListMiddleware(token));
+            props.dispatch(OrderMiddleware(localStorage.token));
             // props.dispatch(OrderMiddleware(token)); 
         }
 
     },[props.isLogedIn,props.status]);
-
-    useEffect(()=>{
-        props.dispatch(OrderMiddleware(localStorage.token));
-    },[])
 
     let searchString = ""
     let search = (event)=>{

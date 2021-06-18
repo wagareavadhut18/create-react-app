@@ -17,7 +17,7 @@ function Cartlist(props){
 
     const addtocart = (e,data)=>{
         // alert(JSON.stringify(data.price));
-        console.log("adding data from cartlist>>>>",data);
+        // console.log("adding data from cartlist>>>>",data);
 
         let  apiurl =process.env.REACT_APP_BASE_URL+"addcaketocart";
 
@@ -57,7 +57,7 @@ function Cartlist(props){
     }
 
     const rmquantity =(e,cakeid)=>{
-        alert("cakeid>>",JSON.stringify(cakeid));
+        // alert("cakeid>>",JSON.stringify(cakeid));
         const URI = "removeonecakefromcart";
         const token = localStorage.token;
         // alert(token);

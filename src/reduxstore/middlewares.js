@@ -113,7 +113,7 @@ export function RemoveSpecificakeMiddleware(token,id,URI){
 }
 
 export function RemoveCakeByQuantityMiddleware(token,id,URI){
-    alert("token"+token+"id"+id+"uri="+URI)
+    // alert("token"+token+"id"+id+"uri="+URI)
      return function(dispatch){
       let  apiurl =process.env.REACT_APP_BASE_URL+URI;
              axios({
@@ -126,7 +126,7 @@ export function RemoveCakeByQuantityMiddleware(token,id,URI){
                cakeid:id
              }}).then((res)=>{
             const cakeobj =JSON.parse(res.config.data);
-            console.log("response data",res,"response cakeobj>>",cakeobj,"response cakeid>>",cakeobj.cakeid);
+            // console.log("response data",res,"response cakeobj>>",cakeobj,"response cakeid>>",cakeobj.cakeid);
               dispatch({
                 type:'REMOVECAKEQTY',
                 payload:{
@@ -153,7 +153,7 @@ export function OrderMiddleware(token){
                  },
                  data:{}})
                      .then(res => {
-                       console.log('orders',res.data.cakeorders)
+                    //    console.log('orders',res.data.cakeorders)
                          const Data = res.data.error!=null?[]:res.data.cakeorders;
                          //console.log('result is',res)
                          dispatch({

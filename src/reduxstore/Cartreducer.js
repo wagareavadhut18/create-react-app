@@ -16,7 +16,7 @@ function Cartreducer(state={
             state["totalprice"]=0;
             state["totalQuantity"]=0
             state["cart"] =[...state.cart, ...action.payload.cakedata];
-            console.log("data before totalprice",state["cart"]);
+            // console.log("data before totalprice",state["cart"]);
             state["status"] =false;
             if( state["cart"].length>0){
                 state["cart"].forEach(function(x, index, arry){
@@ -59,10 +59,12 @@ function Cartreducer(state={
         case "REMOVECAKEQTY":
                 state={...state}
                 state["totalQantity"] = 0
+                state["totalprice"]=0
                 const objIndex = state["cart"].findIndex((obj => obj.cakeid == action.payload.cakeid));
                 state["cart"][objIndex].quantity = state["cart"][objIndex].quantity -1;
                 let totalqt = 0;
                 state["cart"].forEach(function (item) {
+                    state["totalprice"] += item.price;
                     totalqt += item.quantity;
                 });
                 state["totalQuantity"] = totalqt;
@@ -82,8 +84,8 @@ function Cartreducer(state={
             // console.log('orders', action.payload.orders)
             if(action.payload.orders.length>0){
                 state["orders"] =[...state.orders, ...action.payload.orders];
+                localStorage.orders = [...state.orders, ...action.payload.orders];
             }
-            localStorage.orders = [...state.orders, ...action.payload.orders];
             state["totalorders"] = state["orders"].length;
             localStorage.totalorders = state["orders"].length;
             state["isLoading"] =false;

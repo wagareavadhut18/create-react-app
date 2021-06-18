@@ -95,7 +95,7 @@ function Cart(props){
 
 function mapStateToProp(state,props){
     // console.log("state>>>",state,"props>>>>",props)
-    // console.log("totalprice>>",state.CartReducer.totalprice);
+    console.log("totalprice>>",state.CartReducer.totalprice);
     return {
         // username:state.AuthReducer.username,
         // isloggedin:state.AuthReducer.isloggedin,
