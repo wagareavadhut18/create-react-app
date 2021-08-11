@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Route,Link, Redirect, withRouter} from "react-router-dom";
+import { withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import Orderlist from "./Orderlist";
 import { OrderMiddleware } from '../reduxstore/middlewares';
 
 function Myorders(props){
-  let [orders,setOrders] = useState([]);
     useEffect(()=>{
         const token = localStorage.token;
         props.dispatch(OrderMiddleware(token));
-        setOrders(props.orderlist);
     },[props.totalorders])
     return (
         <div className="container">
@@ -30,7 +28,7 @@ function Myorders(props){
 
 
 function mapStateToProp(state,props){
-  console.log("state>>>",state,"props>>>>",props)
+  // console.log("state>>>",state,"props>>>>",props)
   // console.log("totalprice>>",state.CartReducer.orders);
   return {
       orderlist:state.CartReducer.orders,
