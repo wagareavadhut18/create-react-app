@@ -8,12 +8,11 @@ import { CartListMiddleware } from '../reduxstore/middlewares';
 function Cakedetail(props){
     var cakeid = props.match.params.cakeid;
     //console.log('????',id)
-    
+
     const [cakedetails, setCakesdetail] = useState({})
     const [cakelist, setCakesList] = useState({})
     var [ratingWidth, setRatingWidth]=useState(0);
     let starWidth=(value)=>{
-		
 		let ratingString=(Math.max(0, (Math.min(5, parseFloat(value)))) * 16)+"px";
 		setRatingWidth(ratingString)
 	}

@@ -3,10 +3,11 @@ function Cartreducer(state={
         totalQuantity:0,
         orderDetails:[],
         totalprice:0,
-        totalorders:localStorage.orders ? localStorage.orders.length : 0,
+        totalorders:localStorage.totalorders?localStorage.totalorders:0,
         isLoading:true,
-        orders:localStorage.orders ? localStorage.orders : [],
+        orders:localStorage.orders?JSON.parse(localStorage.orders):[],
         status:false,
+        orderstatus:false,
         ordersuccess:false
     },action){
     switch(action.type){
@@ -81,13 +82,13 @@ function Cartreducer(state={
 
         case "ALLORDERS":
             state["orders"]=[];
-            // console.log('orders', action.payload.orders)
-            if(action.payload.orders.length>0){
-                state["orders"] =[...state.orders, ...action.payload.orders];
-                localStorage.orders = [...state.orders, ...action.payload.orders];
-            }
-            state["totalorders"] = state["orders"].length;
+            state["orderstatus"]=true;
+            localStorage.setItem('orders', JSON.stringify(action.payload.orders));
+            // localStorage.orders = [...action.payload.orders];
+            // state["orders"] = localStorage.orders;
+            state["orders"] = JSON.parse(localStorage.getItem('orders'));
             localStorage.totalorders = state["orders"].length;
+            state["totalorders"] = localStorage.totalorders;
             state["isLoading"] =false;
             return state;
 
@@ -98,6 +99,7 @@ function Cartreducer(state={
                 state["totalQuantity"]=0;
                 state["totalprice"] =0;
                 state["ordersuccess"]=action.payload.status;
+                state["totalorders"]= localStorage.totalorders+1;
                 return state;
     
         default:return state;

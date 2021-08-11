@@ -10,7 +10,7 @@ function Navbar(props){
             // alert("i am called")
             const token = localStorage.token;
             props.dispatch(CartListMiddleware(token));
-            props.dispatch(OrderMiddleware(localStorage.token));
+            props.dispatch(OrderMiddleware(token));
             // props.dispatch(OrderMiddleware(token)); 
         }
 
@@ -74,12 +74,9 @@ function Navbar(props){
                         <ul className="navbar-nav">
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {/* <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" alt="" width="40" height="40" className="rounded-circle"/> */}
                                 {props.username}
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                {/* <a className="dropdown-item" href="#">Dashboard</a> */}
-                                {/* <a className="dropdown-item" href="#">Edit Profile</a> */}
                                 <a className="dropdown-item" href="#" onClick={logout}>Log Out</a>
                                 <a className="dropdown-item" href="#" onClick={myorders}>My Orders</a>
                                 </div>
